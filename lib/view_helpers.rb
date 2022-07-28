@@ -1,9 +1,11 @@
 module RailsWillPaginateSeoHelper
   module ViewHelpers
-    def will_paginate_seo_links(collection)
+    def will_paginate_seo_links(collection, first_word_translations = 'First', page_word_translations = 'Page')
       return unless collection.respond_to?(:current_page)
 
       @collection = collection
+      @first_word_translations = first_word_translations
+      @page_word_translations = page_word_translations
       build_tags
     end
 
@@ -26,10 +28,10 @@ module RailsWillPaginateSeoHelper
                           original_url.gsub(/page\=\d{1,}/, "page=#{previous_page}")
                         end
         if previous_page >= 2 # if page 3 or more add the base url link
-          return content_tag(:a, '', href: original_url.gsub(/(&|\?)page\=\d{1,}/, '')) + content_tag(:a, '', href: prev_page_url)
+          return content_tag(:a, @first_word_translations, href: original_url.gsub(/(&|\?)page\=\d{1,}/, '')) + content_tag(:a, "#{@page_word_translations} #{previous_page}", href: prev_page_url)
         end
 
-        content_tag(:a, '', href: prev_page_url)
+        content_tag(:a, "#{@page_word_translations} #{previous_page}", href: prev_page_url)
       end
     end
 
@@ -51,8 +53,8 @@ module RailsWillPaginateSeoHelper
                           original_url.concat("?page=#{next_page}")
                         end
       end
-      
-      content_tag(:a, '', href: next_page_url) if next_page_url
+
+      content_tag(:a, "#{@page_word_translations} #{next_page}", href: next_page_url) if next_page_url
     end
   end
 end
