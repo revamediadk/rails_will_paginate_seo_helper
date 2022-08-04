@@ -28,10 +28,10 @@ module RailsWillPaginateSeoHelper
                           original_url.gsub(/page\=\d{1,}/, "page=#{previous_page}")
                         end
         if previous_page >= 2 # if page 3 or more add the base url link
-          return content_tag(:a, @first_word_translations, href: original_url.gsub(/(&|\?)page\=\d{1,}/, '')) + content_tag(:a, "#{@page_word_translations} #{previous_page}", href: prev_page_url)
+          return content_tag(:a, @first_word_translations, href: original_url.gsub(/(&|\?)page\=\d{1,}/, ''), class: "first-page") + content_tag(:a, "#{@page_word_translations} #{previous_page}", href: prev_page_url, class: "previous-page")
         end
 
-        content_tag(:a, "#{@page_word_translations} #{previous_page}", href: prev_page_url)
+        content_tag(:a, "#{@page_word_translations} #{previous_page}", href: prev_page_url, class: "previous-page")
       end
     end
 
@@ -54,7 +54,7 @@ module RailsWillPaginateSeoHelper
                         end
       end
 
-      content_tag(:a, "#{@page_word_translations} #{next_page}", href: next_page_url) if next_page_url
+      content_tag(:a, "#{@page_word_translations} #{next_page}", href: next_page_url, class: "next-page") if next_page_url
     end
   end
 end
